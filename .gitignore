@@ -1,1 +1,2 @@
- 
+# Ignore SSH keys
+id_rsa* 
