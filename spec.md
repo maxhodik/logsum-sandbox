@@ -1,7 +1,7 @@
-# Specification: Log Summary CLI (Java)
+# Specification: Log Summary CLI
 
 ## Goal
-Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a Java command-line interface.
+Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a command-line interface.
 
 ## Inputs
 - `events.csv` containing columns: `timestamp`, `level`, `service`, `message`.
@@ -10,7 +10,7 @@ Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a 
 - `summary.csv` containing aggregated event groups.
 
 ## Normalisation Rules
-- Timestamps preserved as string/ISO-8601.
+- Timestamps preserved as strings.
 - Log levels normalised to uppercase; missing levels default to `UNKNOWN`.
 - Service names trimmed of whitespace.
 
@@ -26,7 +26,7 @@ Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a 
 - **Empty input:** Print error message and exit with code 1.
 
 ## CLI
-- Usage: `mvn exec:java -Dexec.mainClass="com.sandbox.LogSum" -Dexec.args="data/sample_events.csv data/summary.csv"`
+- Usage: `python -m src.logsum data/sample_events.csv data/summary.csv`
 - Exit codes: `0` on success, `1` on error.
 
 ## Out of Scope
@@ -34,7 +34,7 @@ Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a 
 - Database storage or web UI dashboards.
 
 ## Implementation notes
-- Implemented using pure Java 21 standard library (`java.nio`, `records`, `HashMap`).
+- Implemented using pure Python 3.11 standard library (`csv`, `argparse`, `collections`).
 - Missing log levels default to `UNKNOWN`.
 
 ## Signed off

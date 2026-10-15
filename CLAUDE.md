@@ -1,16 +1,13 @@
 # Project Context
-- Tiny Java CLI tool that summarises synthetic events.csv logs.
+- Tiny CLI that summarises synthetic events.csv logs.
 
 # Conventions
-- Code in `src/main/java/`, tests in `src/test/java/`, data in `data/`.
-- Build tool: Maven (`pom.xml`).
+- Code in `src/`, tests in `tests/`, data in `data/`.
 
 # Utilities to Prefer
-- Java 21 standard library (records, NIO).
-- JUnit 5 for testing.
-- Pure Java standard library (no external dependencies).
+- Python 3.11 standard library, ruff, pytest.
 
 # Escalation Gates
-- Stop before adding new external dependencies to `pom.xml`.
-- Use synthetic data only; never commit real PII.
-- Never overwrite `spec.md` after sign-off without asking.
+- Stop before adding dependencies.
+- Synthetic data only.
+- Never overwrite spec.md after sign-off without asking.
