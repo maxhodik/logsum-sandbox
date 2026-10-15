@@ -1,80 +1,42 @@
-\# Specification: Log Summary CLI
+# Specification: Log Summary CLI (Java)
 
+## Goal
+Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a Java command-line interface.
 
+## Inputs
+- `events.csv` containing columns: `timestamp`, `level`, `service`, `message`.
 
-\## Goal
+## Outputs
+- `summary.csv` containing aggregated event groups.
 
-Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a command-line interface.
+## Normalisation Rules
+- Timestamps preserved as string/ISO-8601.
+- Log levels normalised to uppercase; missing levels default to `UNKNOWN`.
+- Service names trimmed of whitespace.
 
+## Grouping Rule
+- Grouped by the exact key: `(service, level)`.
 
+## Aggregation
+- Count of events per group.
+- `first_seen` timestamp and `last_seen` timestamp per group.
 
-\## Inputs
+## Edge Cases
+- **Missing level:** Default to `UNKNOWN`.
+- **Empty input:** Print error message and exit with code 1.
 
-\- `events.csv` containing columns: `timestamp`, `level`, `service`, `message`.
+## CLI
+- Usage: `mvn exec:java -Dexec.mainClass="com.sandbox.LogSum" -Dexec.args="data/sample_events.csv data/summary.csv"`
+- Exit codes: `0` on success, `1` on error.
 
+## Out of Scope
+- Real-time log streaming.
+- Database storage or web UI dashboards.
 
+## Implementation notes
+- Implemented using pure Java 21 standard library (`java.nio`, `records`, `HashMap`).
+- Missing log levels default to `UNKNOWN`.
 
-\## Outputs
-
-\- `summary.csv` containing aggregated event groups.
-
-
-
-\## Normalisation Rules
-
-\- Timestamps normalised to ISO-8601 format.
-
-\- Log levels normalised to uppercase (e.g., INFO, ERROR, WARN).
-
-\- Service names trimmed of whitespace.
-
-
-
-\## Grouping Rule
-
-\- Grouped by the exact key: `(service, level)`.
-
-
-
-\## Aggregation
-
-\- Count of events per group.
-
-\- `first\_seen` timestamp and `last\_seen` timestamp per group.
-
-
-
-\## Edge Cases
-
-\- \*\*Missing level:\*\* Default to `UNKNOWN`.
-
-\- \*\*Malformed timestamp:\*\* Skip the row or log a warning and treat timestamp as invalid/epoch.
-
-\- \*\*Empty input:\*\* Output an empty `summary.csv` with headers and exit with code 0.
-
-
-
-\## CLI
-
-\- Usage: `python -m src.cli --input data/events.csv --output data/summary.csv`
-
-\- Exit codes: `0` on success, `1` on error (e.g., file not found).
-
-
-
-\## Out of Scope
-
-\- Real-time log tailing or streaming.
-
-\- Database storage or web UI dashboards.
-
-\- Complex regex pattern matching for messages.
-
-
-
-\## Signed off
-
-\- \*\*Author:\*\* Maksym Hodik (MH)
-
-\- \*\*Date:\*\* 2026-10-15
-
+## Signed off
+- **Author:** Maksym Hodik (MH)
+- **Date:** 2026-10-15

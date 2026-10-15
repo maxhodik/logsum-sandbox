@@ -1,38 +1,16 @@
-\# CLAUDE.md
+# Project Context
+- Tiny Java CLI tool that summarises synthetic events.csv logs.
 
+# Conventions
+- Code in `src/main/java/`, tests in `src/test/java/`, data in `data/`.
+- Build tool: Maven (`pom.xml`).
 
+# Utilities to Prefer
+- Java 21 standard library (records, NIO).
+- JUnit 5 for testing.
+- Pure Java standard library (no external dependencies).
 
-\## Project Context
-
-A tiny CLI that summarizes synthetic `events.csv` logs. The project operates entirely in a sandbox environment with no real data.
-
-
-
-\## Conventions
-
-\- Code is stored in the `src/` directory.  
-
-\- Tests are stored in the `tests/` directory.  
-
-\- Synthetic data is stored in the `data/` directory.  
-
-
-
-\## Utilities to Prefer
-
-\- Use Python 3.11 standard library.  
-
-\- Prefer `ruff` for linting.  
-
-\- Use `pytest` for testing.  
-
-
-
-\## Escalation Gates
-
-\- Stop before adding external dependencies.  
-
-\- Operate only on synthetic data; do not introduce real data.  
-
-\- Never overwrite `spec.md` after sign-off without explicit confirmation.  
-
+# Escalation Gates
+- Stop before adding new external dependencies to `pom.xml`.
+- Use synthetic data only; never commit real PII.
+- Never overwrite `spec.md` after sign-off without asking.
