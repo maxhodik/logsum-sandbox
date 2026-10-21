@@ -43,7 +43,7 @@ def main():
                     "last_seen": g["last_seen"]
                 })
         print(f"Summary successfully written to {args.output}")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 

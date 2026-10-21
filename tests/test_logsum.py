@@ -30,7 +30,7 @@ def test_cli_execution(sample_csv, tmp_path):
     output_path = tmp_path / "summary.csv"
     result = subprocess.run(
         ["python", "-m", "src.logsum", str(sample_csv), str(output_path)],
-	check=False
+	check=False,
         capture_output=True,
         text=True
     )
@@ -67,7 +67,7 @@ def test_empty_input_behaviour(empty_csv, tmp_path):
     output_path = tmp_path / "summary.csv"
     result = subprocess.run(
         ["python", "-m", "src.logsum", str(empty_csv), str(output_path)],
-	check=False
+	check=False,
         capture_output=True,
         text=True
     )
@@ -79,7 +79,7 @@ def test_bad_input_exit_code(tmp_path):
     output_path = tmp_path / "summary.csv"
     result = subprocess.run(
         ["python", "-m", "src.logsum", str(non_existent), str(output_path)],
-	check=False
+	check=False,
         capture_output=True,
         text=True
     )
