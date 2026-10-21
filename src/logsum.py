@@ -16,6 +16,12 @@ def main():
     parser = argparse.ArgumentParser(description="Summarise synthetic event logs.")
     parser.add_argument("input", help="Path to input events.csv")
     parser.add_argument("output", help="Path to output summary.csv")
+    parser.add_argument(
+        "--min-count",
+        type=int,
+        default=0,
+        help="Minimum event count threshold to include group in output",
+    )
     args = parser.parse_args()
 
     groups = defaultdict(lambda: {"count": 0, "first_seen": None, "last_seen": None})
@@ -26,7 +32,7 @@ def main():
             for row in reader:
                 timestamp, level, service = parse_event_row(row)
                 if not timestamp and not service:
-                    continue  # Guard against completely empty rows
+                    continue
 
                 key = (service, level)
                 g = groups[key]
@@ -42,6 +48,8 @@ def main():
             writer = csv.DictWriter(outfile, fieldnames=fieldnames)
             writer.writeheader()
             for key, g in groups.items():
+                if g["count"] < args.min_count:
+                    continue  # Apply min-count filter
                 writer.writerow({
                     "service": key[0],
                     "level": key[1],

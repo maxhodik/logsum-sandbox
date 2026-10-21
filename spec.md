@@ -26,7 +26,9 @@ Summarise synthetic `events.csv` logs into a grouped `summary.csv` report via a 
 - **Empty input:** Print error message and exit with code 1.
 
 ## CLI
-- Usage: `python -m src.logsum data/sample_events.csv data/summary.csv`
+- Usage: `python -m src.logsum data/events.csv data/summary.csv [--min-count N]`
+- Options:
+  - `--min-count N`: Optional integer. When set, outputs only event groups whose total count is `>= N`. Default is `0` (no filtering).
 - Exit codes: `0` on success, `1` on error.
 
 ## Out of Scope
