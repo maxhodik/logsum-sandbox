@@ -3,6 +3,7 @@ import csv
 import sys
 from collections import defaultdict
 
+
 def main():
     parser = argparse.ArgumentParser(description="Summarise synthetic event logs.")
     parser.add_argument("input", help="Path to input events.csv")
