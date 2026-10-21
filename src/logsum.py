@@ -1,5 +1,5 @@
-import csv
 import argparse
+import csv
 import sys
 from collections import defaultdict
 
