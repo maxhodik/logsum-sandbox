@@ -4,6 +4,14 @@ import sys
 from collections import defaultdict
 
 
+def parse_event_row(row):
+    """Normalise and extract fields from a single CSV row."""
+    timestamp = row.get("timestamp", "").strip()
+    level = row.get("level", "").strip() or "UNKNOWN"
+    service = row.get("service", "").strip()
+    return timestamp, level, service
+
+
 def main():
     parser = argparse.ArgumentParser(description="Summarise synthetic event logs.")
     parser.add_argument("input", help="Path to input events.csv")
@@ -16,11 +24,9 @@ def main():
         with open(args.input, mode="r", encoding="utf-8") as infile:
             reader = csv.DictReader(infile)
             for row in reader:
-                timestamp = row.get("timestamp", "").strip()
-                level = row.get("level", "").strip()
-                if not level:
-                    level = "UNKNOWN"
-                service = row.get("service", "").strip()
+                timestamp, level, service = parse_event_row(row)
+                if not timestamp and not service:
+                    continue  # Guard against completely empty rows
 
                 key = (service, level)
                 g = groups[key]
@@ -41,12 +47,13 @@ def main():
                     "level": key[1],
                     "count": g["count"],
                     "first_seen": g["first_seen"],
-                    "last_seen": g["last_seen"]
+                    "last_seen": g["last_seen"],
                 })
         print(f"Summary successfully written to {args.output}")
     except Exception as e:  # noqa: BLE001
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
